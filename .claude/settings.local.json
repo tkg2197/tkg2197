@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node tools/verify-slicebox.mjs)",
+      "Bash(node tools/inspect.mjs photos.html slicebox-check.png)",
+      "Bash(node tools/diag-enter.mjs)",
+      "Bash(node -e ' *)",
+      "Bash(python -c ' *)",
+      "Bash(node tools/diag-ghost.mjs)",
+      "Bash(node tools/diag-nav-indicator.mjs)",
+      "Bash(node tools/diag-ghost-bubble.mjs)",
+      "Bash(node tools/diag-ghost-timing.mjs)",
+      "WebFetch(domain:codepen.io)"
+    ]
+  }
+}
