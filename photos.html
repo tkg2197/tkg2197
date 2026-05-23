@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>照片墙 · 我们的小窝</title>
+  <script>document.documentElement.classList.add("pt-loading");</script>
+  <link rel="stylesheet" href="photos.css?v=7" />
+  <link rel="stylesheet" href="corner-dogs.css?v=4" />
+  <link rel="stylesheet" href="site-font.css?v=1" />
+  <link rel="stylesheet" href="scroll-reveal.css?v=1" />
+  <link rel="stylesheet" href="page-transition.css?v=8" />
+  <link rel="stylesheet" href="ghost.css?v=3" />
+</head>
+<body>
+  <!-- 背景云朵装饰 -->
+  <div class="pw-bg" aria-hidden="true">
+    <span class="pw-cloud pw-cloud--1"></span>
+    <span class="pw-cloud pw-cloud--2"></span>
+    <span class="pw-cloud pw-cloud--3"></span>
+  </div>
+
+  <header class="site-nav" data-site-nav>
+    <div class="site-nav__bar">
+      <a class="site-nav__brand" href="index.html?skipCover=1#home">我们的小窝</a>
+      <nav class="site-nav__links" aria-label="站内导航">
+        <a href="index.html?skipCover=1#home">首页</a>
+        <a href="places.html">今年想去</a>
+        <a href="blog.html">双人博客</a>
+        <a href="records.html">生活记录</a>
+        <a class="is-active" href="photos.html" aria-current="page">照片墙</a>
+        <a href="activity.html">时段活动</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="pw-main">
+    <!-- 视图 1：照片墙（按日期叠放） -->
+    <section class="pw-wall" id="pwWall">
+      <header class="pw-header">
+        <h1 class="pw-title">📷 照片墙</h1>
+        <p class="pw-subtitle">用照片记录生活的每一个瞬间</p>
+      </header>
+      <div class="pw-toolbar">
+        <button class="pw-upload-btn" id="pwUploadBtn" type="button">＋ 上传照片</button>
+      </div>
+      <div class="pw-stacks" id="pwStacks"></div>
+    </section>
+
+    <!-- 视图 2：某天详情（照片网格） -->
+    <section class="pw-detail is-hidden" id="pwDetail">
+      <div class="pw-detail__bar">
+        <button class="pw-back-btn" id="pwBackBtn" type="button">← 照片墙</button>
+        <div class="pw-detail__meta">
+          <span class="pw-detail__date" id="pwDetailDate"></span>
+          <span class="pw-detail__count" id="pwDetailCount"></span>
+        </div>
+      </div>
+      <div class="pw-grid" id="pwGrid"></div>
+    </section>
+  </main>
+
+  <!-- 上传弹窗 -->
+  <div class="pw-modal is-hidden" id="pwModal" role="dialog" aria-modal="true" aria-label="上传照片">
+    <div class="pw-modal__mask" id="pwModalMask"></div>
+    <div class="pw-modal__card">
+      <h2 class="pw-modal__title">上传照片</h2>
+
+      <div class="pw-field">
+        <span class="pw-field__label">谁上传的</span>
+        <div class="pw-who" id="pwWho">
+          <button class="pw-who__btn is-active" type="button" data-who="white">🐶 白狗</button>
+          <button class="pw-who__btn" type="button" data-who="brown">🐕 棕狗</button>
+        </div>
+      </div>
+
+      <div class="pw-field">
+        <span class="pw-field__label">日期</span>
+        <input class="pw-date" id="pwDate" type="date" />
+      </div>
+
+      <label class="pw-filebtn" id="pwFileBtn">
+        ＋ 选择照片（可多选）
+        <input type="file" id="pwFile" accept="image/*" multiple hidden />
+      </label>
+
+      <p class="pw-modal__status" id="pwStatus"></p>
+      <button class="pw-modal__close" id="pwModalClose" type="button">取消</button>
+    </div>
+  </div>
+
+  <!-- 灯箱 -->
+  <div class="pw-lb is-hidden" id="pwLb" role="dialog" aria-modal="true" aria-label="查看照片">
+    <button class="pw-lb__close" id="pwLbClose" type="button" aria-label="关闭">✕</button>
+    <button class="pw-lb__nav pw-lb__nav--prev" id="pwLbPrev" type="button" aria-label="上一张">‹</button>
+    <button class="pw-lb__nav pw-lb__nav--next" id="pwLbNext" type="button" aria-label="下一张">›</button>
+    <figure class="pw-lb__stage">
+      <img class="pw-lb__img" id="pwLbImg" alt="" />
+      <figcaption class="pw-lb__cap" id="pwLbCap"></figcaption>
+      <div class="pw-lb__diary is-hidden" id="pwLbDiary"></div>
+    </figure>
+    <button class="pw-lb__delete" id="pwLbDelete" type="button">🗑 删除这张</button>
+  </div>
+
+  <script src="photo-store.js?v=1"></script>
+  <script src="photos.js?v=5"></script>
+  <script src="corner-dogs.js?v=5"></script>
+  <script src="scroll-reveal.js?v=1"></script>
+  <script src="ghost.js?v=3"></script>
+  <script src="page-transition.js?v=14"></script>
+</body>
+</html>

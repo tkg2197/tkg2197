@@ -1,0 +1,536 @@
+/* ============================================================
+   我们的小窝 — 双人博客阅读页
+   长文阅读 / 顶部标签滚动收拢 / 目录高亮和进度条
+   ============================================================ */
+
+:root {
+  --font: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB",
+          "Segoe UI", system-ui, sans-serif;
+  --white-accent: #7aa6d4;
+  --brown-accent: #d49356;
+  --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --text: #4a4f5c;
+  --muted: #7a8aa0;
+  --heading: #3f5a72;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  min-height: 100vh;
+  font-family: var(--font);
+  color: var(--text);
+  background: linear-gradient(172deg, #d3e8f4 0%, #e7f0d6 72%, #eef4e1 100%);
+  background-attachment: fixed;
+}
+
+.blog-bg {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.blog-cloud {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.55);
+  border-radius: 50%;
+  filter: blur(2px);
+}
+.blog-cloud::before,
+.blog-cloud::after {
+  content: "";
+  position: absolute;
+  background: inherit;
+  border-radius: 50%;
+}
+.blog-cloud::before { width: 60%; height: 150%; top: -40%; left: 14%; }
+.blog-cloud::after  { width: 46%; height: 130%; top: -26%; right: 16%; }
+.blog-cloud--1 {
+  width: 150px; height: 54px; top: 9%; left: -42px;
+  animation: blog-drift 95s linear infinite;
+}
+.blog-cloud--2 {
+  width: 112px; height: 42px; top: 31%; right: -36px;
+  animation: blog-drift 120s linear infinite reverse;
+}
+.blog-cloud--3 {
+  width: 132px; height: 48px; top: 72%; left: -50px;
+  animation: blog-drift 108s linear infinite;
+}
+@keyframes blog-drift {
+  from { transform: translateX(0); }
+  to   { transform: translateX(125vw); }
+}
+
+.blog-top {
+  position: fixed;
+  top: 18px; left: 18px; right: 18px;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  pointer-events: none;
+}
+
+.blog-back,
+.blog-nav {
+  pointer-events: auto;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 4px 14px rgba(70, 80, 110, 0.16);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.blog-back {
+  padding: 9px 16px;
+  border-radius: 999px;
+  color: #5b6478;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.15s ease, background 0.2s ease;
+}
+.blog-back:hover { transform: translateY(-2px); background: #ffffff; }
+
+.blog-nav {
+  display: flex;
+  gap: 6px;
+  padding: 6px;
+  border-radius: 999px;
+}
+.blog-nav__link {
+  padding: 7px 14px;
+  border-radius: 999px;
+  color: #647084;
+  font-size: 13px;
+  font-weight: 800;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+.blog-nav__link:hover { transform: translateY(-2px); }
+.blog-nav__link.is-active {
+  background: #ffffff;
+  color: #e8895b;
+  box-shadow: 0 3px 10px rgba(70, 80, 110, 0.14);
+}
+
+.blog-tags {
+  position: fixed;
+  top: 88px;
+  left: 50%;
+  z-index: 25;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  width: min(760px, calc(100vw - 36px));
+  transform: translateX(-50%);
+  transition:
+    top 0.42s var(--spring),
+    width 0.42s var(--spring),
+    padding 0.35s ease,
+    border-color 0.25s ease,
+    background 0.25s ease,
+    opacity 0.25s ease,
+    transform 0.42s var(--spring);
+}
+.blog-tags.is-gathered {
+  top: 96px;
+  width: auto;
+  padding: 7px;
+  border: 2px solid rgba(255, 255, 255, 0.92);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.24);
+  box-shadow: 0 8px 22px rgba(70, 80, 110, 0.16);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+/* 滚远后整体向上滑出消失。
+   !important 用来压住 page-transition.css 里 .pt-ready.pt-entered
+   .pt-page-piece 的 opacity:1 / transform:0 —— 那条规则比这里的
+   两类选择器更深、且后加载，否则 is-hidden 完全没视觉效果。 */
+.blog-tags.is-hidden {
+  opacity: 0 !important;
+  pointer-events: none;
+  transform: translate(-50%, -70px) scale(0.94) !important;
+  transition:
+    opacity 0.36s ease-out,
+    transform 0.44s ease-out;
+}
+
+.blog-tag {
+  flex: 0 0 auto;
+  padding: 8px 15px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.78);
+  color: #667287;
+  font-size: 12px;
+  font-weight: 800;
+  box-shadow: 0 3px 10px rgba(70, 80, 110, 0.12);
+}
+.blog-tag--white { color: #4f85b8; background: rgba(246, 250, 255, 0.9); }
+.blog-tag--brown { color: #b6783c; background: rgba(255, 248, 239, 0.9); }
+
+/* ---- 返回博客列表的浮动按钮 ---------------------------------
+   位于左上角，初始藏起避免和顶部导航里的「我们的小窝」品牌字重叠；
+   全站导航滚动隐藏(.site-nav.is-nav-hidden)后再淡入，刚好替补出现。
+   离场动画(html.pt-leaving)时跟随一起淡出。 */
+.blog-back-btn {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  z-index: 36;
+  padding: 9px 16px;
+  background: rgba(255, 255, 255, 0.86);
+  border-radius: 999px;
+  color: #5b6478;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(70, 80, 110, 0.16);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  opacity: 0;
+  transform: translateY(-12px);
+  pointer-events: none;
+  transition:
+    opacity 0.36s ease,
+    transform 0.36s ease,
+    background 0.2s ease;
+}
+.site-nav.is-nav-hidden ~ .blog-back-btn {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.site-nav.is-nav-hidden ~ .blog-back-btn:hover {
+  background: #ffffff;
+  transform: translateY(-3px);
+}
+/* 跳走时，跟全站离场动画一起淡出 */
+html.pt-leaving .site-nav.is-nav-hidden ~ .blog-back-btn {
+  opacity: 0;
+  transform: translateY(-58px) scale(0.94);
+  filter: blur(10px);
+  pointer-events: none;
+  transition:
+    opacity 0.48s ease-out,
+    transform 0.48s ease-out,
+    filter 0.48s ease-out;
+}
+@media (max-width: 620px) {
+  .blog-back-btn {
+    top: 12px;
+    left: 12px;
+    padding: 8px 13px;
+    font-size: 12px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .blog-back-btn { transition: none; }
+}
+
+.blog-shell {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 720px) 260px;
+  gap: 76px;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 154px 24px 110px;
+}
+
+.article {
+  min-width: 0;
+  padding-top: 34px;
+}
+
+.article-head {
+  margin-bottom: 58px;
+}
+.article-kicker {
+  margin-bottom: 14px;
+  color: #7f91a6;
+  font-size: 13px;
+  font-weight: 800;
+}
+.article h1 {
+  max-width: 720px;
+  color: var(--heading);
+  font-size: clamp(34px, 5vw, 54px);
+  line-height: 1.14;
+  font-weight: 900;
+}
+.article-summary {
+  margin-top: 20px;
+  max-width: 650px;
+  color: #647084;
+  font-size: 17px;
+  line-height: 1.9;
+}
+.article-authors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+.article-author {
+  padding: 8px 15px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 800;
+}
+.article-author--white {
+  background: #f6faff;
+  color: var(--white-accent);
+}
+.article-author--brown {
+  background: #fff8ef;
+  color: var(--brown-accent);
+}
+
+.article-section {
+  scroll-margin-top: 110px;
+  margin-bottom: 56px;
+  padding: 28px 0 10px;
+}
+.article-section h2 {
+  color: var(--heading);
+  font-size: 26px;
+  line-height: 1.35;
+  font-weight: 900;
+  margin-bottom: 18px;
+}
+.article-section h3 {
+  margin: 26px 0 12px;
+  color: #4c6379;
+  font-size: 20px;
+  line-height: 1.42;
+  font-weight: 900;
+}
+.article-section p {
+  color: #586273;
+  font-size: 16px;
+  line-height: 2.05;
+}
+.article-section p + p { margin-top: 16px; }
+.article-section a {
+  color: #4f85b8;
+  font-weight: 800;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(79, 133, 184, 0.35);
+}
+.article-section a:hover { color: #b6783c; border-bottom-color: rgba(182, 120, 60, 0.42); }
+.article-section code {
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.68);
+  color: #536070;
+  font-family: "Cascadia Code", Consolas, monospace;
+  font-size: 0.9em;
+}
+.article-section pre {
+  overflow-x: auto;
+  margin: 18px 0;
+  padding: 16px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.64);
+  box-shadow: 0 6px 18px rgba(70, 80, 110, 0.1);
+}
+.article-section pre code {
+  display: block;
+  padding: 0;
+  background: transparent;
+  line-height: 1.75;
+  white-space: pre;
+}
+.article-list {
+  margin: 16px 0 18px 22px;
+  color: #586273;
+  font-size: 16px;
+  line-height: 2;
+}
+.article-list li + li { margin-top: 5px; }
+.article-quote {
+  margin: 20px 0;
+  padding: 18px 20px;
+  border-left: 4px solid rgba(122, 166, 212, 0.68);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.5);
+  color: #5f6c7d;
+  font-size: 15px;
+  line-height: 1.9;
+  box-shadow: 0 6px 16px rgba(70, 80, 110, 0.1);
+}
+
+.quote-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 22px;
+}
+.quote-pair__item {
+  position: relative;
+  min-height: 164px;
+  padding: 24px 22px 20px;
+  border-radius: 8px;
+  color: #536070;
+  font-size: 15px;
+  line-height: 1.88;
+  box-shadow: 0 7px 18px rgba(70, 80, 110, 0.14);
+}
+.quote-pair__item::before {
+  content: "";
+  position: absolute;
+  top: -9px; left: 50%;
+  width: 68px; height: 20px;
+  transform: translateX(-50%) rotate(-4deg);
+  border-radius: 3px;
+  opacity: 0.72;
+}
+.quote-pair__item span {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 900;
+}
+.quote-pair__item--white { background: #f6faff; }
+.quote-pair__item--white::before { background: rgba(122, 166, 212, 0.55); }
+.quote-pair__item--white span { color: var(--white-accent); }
+.quote-pair__item--brown { background: #fff8ef; }
+.quote-pair__item--brown::before { background: rgba(212, 147, 86, 0.55); }
+.quote-pair__item--brown span { color: var(--brown-accent); }
+
+.toc {
+  position: relative;
+}
+.toc__inner {
+  position: sticky;
+  top: 112px;
+}
+.toc__title {
+  margin-bottom: 18px;
+  color: var(--heading);
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0;
+}
+.toc__body {
+  position: relative;
+  padding-left: 18px;
+}
+.toc__track {
+  position: absolute;
+  left: 0; top: 3px;
+  width: 3px;
+  height: calc(100% - 6px);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  overflow: hidden;
+}
+.toc__fill {
+  display: block;
+  width: 100%;
+  height: 0;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--white-accent), #9fdcc5, var(--brown-accent));
+  transition: height 0.12s linear;
+}
+.toc__list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.toc__link {
+  display: block;
+  padding: 7px 10px;
+  border-radius: 8px;
+  color: #7a8595;
+  font-size: 14px;
+  line-height: 1.45;
+  text-decoration: none;
+  transition: color 0.18s ease, background 0.18s ease, transform 0.18s var(--spring);
+}
+.toc__link:hover {
+  color: #4f85b8;
+  transform: translateX(3px);
+}
+.toc__link.is-active {
+  background: rgba(255, 255, 255, 0.62);
+  color: #4f85b8;
+  font-weight: 900;
+  box-shadow: 0 3px 10px rgba(70, 80, 110, 0.1);
+}
+
+@media (max-width: 940px) {
+  .blog-shell {
+    display: block;
+    max-width: 760px;
+    padding-top: 146px;
+  }
+  .toc { display: none; }
+}
+
+@media (max-width: 620px) {
+  .blog-top {
+    top: 12px; left: 12px; right: 12px;
+    align-items: flex-start;
+  }
+  .blog-nav {
+    max-width: 58vw;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .blog-nav::-webkit-scrollbar { display: none; }
+  .blog-nav__link {
+    flex: 0 0 auto;
+    padding: 7px 11px;
+    font-size: 12px;
+  }
+  .blog-back { padding: 8px 12px; font-size: 12px; }
+  .blog-tags {
+    top: 78px;
+    gap: 7px;
+  }
+  .blog-tags.is-gathered {
+    top: 76px;
+    max-width: calc(100vw - 24px);
+    overflow-x: auto;
+    justify-content: flex-start;
+    scrollbar-width: none;
+  }
+  .blog-tags.is-gathered::-webkit-scrollbar { display: none; }
+  .blog-tag {
+    padding: 7px 11px;
+    font-size: 11px;
+  }
+  .blog-shell {
+    padding: 138px 18px 82px;
+  }
+  .article { padding-top: 20px; }
+  .article h1 { font-size: 32px; }
+  .article-summary { font-size: 15px; }
+  .article-section {
+    margin-bottom: 42px;
+    padding-top: 18px;
+  }
+  .article-section h2 { font-size: 22px; }
+  .article-section p { font-size: 15px; line-height: 1.95; }
+  .quote-pair { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .blog-cloud { animation: none; }
+  .blog-tags,
+  .blog-back,
+  .blog-nav__link,
+  .toc__fill,
+  .toc__link { transition: none; }
+}

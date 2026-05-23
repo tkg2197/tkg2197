@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>今年想去 · 我们的小窝</title>
+  <script>document.documentElement.classList.add("pt-loading");</script>
+  <link rel="stylesheet" href="places.css?v=1" />
+  <link rel="stylesheet" href="corner-dogs.css?v=4" />
+  <link rel="stylesheet" href="site-font.css?v=1" />
+  <link rel="stylesheet" href="scroll-reveal.css?v=1" />
+  <link rel="stylesheet" href="page-transition.css?v=8" />
+  <link rel="stylesheet" href="ghost.css?v=3" />
+</head>
+<body>
+  <div class="pl-bg" aria-hidden="true">
+    <span class="pl-cloud pl-cloud--1"></span>
+    <span class="pl-cloud pl-cloud--2"></span>
+    <span class="pl-cloud pl-cloud--3"></span>
+  </div>
+
+  <header class="site-nav" data-site-nav>
+    <div class="site-nav__bar">
+      <a class="site-nav__brand" href="index.html?skipCover=1#home">我们的小窝</a>
+      <nav class="site-nav__links" aria-label="站内导航">
+        <a href="index.html?skipCover=1#home">首页</a>
+        <a class="is-active" href="places.html" aria-current="page">今年想去</a>
+        <a href="blog.html">双人博客</a>
+        <a href="records.html">生活记录</a>
+        <a href="photos.html">照片墙</a>
+        <a href="activity.html">时段活动</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="places-main">
+    <section class="places-hero" aria-labelledby="placesTitle">
+      <p class="places-kicker">This year, together</p>
+      <h1 id="placesTitle">今年想去的地方</h1>
+      <p class="places-lead">把想抵达的城市、海边、山林和小路先收在这里，等日子到了就一起出发。</p>
+      <div class="places-actions">
+        <p class="places-count" id="placeCount">3 个目的地</p>
+        <button class="places-toggle" id="placeToggle" type="button" aria-expanded="false" aria-controls="placeForm">
+          添加地点
+        </button>
+      </div>
+    </section>
+
+    <form class="place-form is-hidden" id="placeForm">
+      <label>
+        <span>地点</span>
+        <input id="placeName" type="text" maxlength="24" placeholder="例如：京都" required />
+      </label>
+      <label>
+        <span>想去理由</span>
+        <textarea id="placeNote" rows="3" maxlength="90" placeholder="想在那里做什么、看什么，写一句就好。" required></textarea>
+      </label>
+      <label>
+        <span>氛围</span>
+        <select id="placeTone">
+          <option value="night">星夜</option>
+          <option value="desert">日落</option>
+          <option value="forest">山林</option>
+          <option value="sea">海边</option>
+        </select>
+      </label>
+      <div class="place-form__actions">
+        <button class="place-form__cancel" id="placeCancel" type="button">取消</button>
+        <button class="place-form__save" type="submit">保存地点</button>
+      </div>
+    </form>
+
+    <section class="place-stage" id="placeList" aria-label="今年想去的地方" aria-live="polite"></section>
+  </main>
+
+  <script src="place-store.js?v=1"></script>
+  <script src="places.js?v=1"></script>
+  <script src="corner-dogs.js?v=5"></script>
+  <script src="scroll-reveal.js?v=1"></script>
+  <script src="ghost.js?v=3"></script>
+  <script src="page-transition.js?v=14"></script>
+</body>
+</html>

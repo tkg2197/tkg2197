@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>生活记录 · 我们的小窝</title>
+  <script>document.documentElement.classList.add("pt-loading");</script>
+  <link rel="stylesheet" href="records.css?v=4" />
+  <link rel="stylesheet" href="corner-dogs.css?v=4" />
+  <link rel="stylesheet" href="site-font.css?v=1" />
+  <link rel="stylesheet" href="scroll-reveal.css?v=1" />
+  <link rel="stylesheet" href="page-transition.css?v=8" />
+  <link rel="stylesheet" href="ghost.css?v=3" />
+</head>
+<body>
+  <div class="rec-bg" aria-hidden="true">
+    <span class="rec-cloud rec-cloud--1"></span>
+    <span class="rec-cloud rec-cloud--2"></span>
+    <span class="rec-cloud rec-cloud--3"></span>
+  </div>
+
+  <header class="site-nav" data-site-nav>
+    <div class="site-nav__bar">
+      <a class="site-nav__brand" href="index.html?skipCover=1#home">我们的小窝</a>
+      <nav class="site-nav__links" aria-label="站内导航">
+        <a href="index.html?skipCover=1#home">首页</a>
+        <a href="places.html">今年想去</a>
+        <a href="blog.html">双人博客</a>
+        <a class="is-active" href="records.html" aria-current="page">生活记录</a>
+        <a href="photos.html">照片墙</a>
+        <a href="activity.html">时段活动</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="rec-main">
+    <header class="rec-header">
+      <h1 class="rec-title">📖 生活记录</h1>
+      <p class="rec-subtitle">一天一页，慢慢攒起来的小日子</p>
+      <button class="rec-add-toggle" id="recAddToggle" type="button" aria-expanded="false" aria-controls="recForm">
+        ＋ 添加生活记录
+      </button>
+    </header>
+
+    <form class="rec-form is-hidden" id="recForm">
+      <div class="rec-form__row">
+        <label class="rec-field">
+          <span>日期</span>
+          <input id="recDate" type="date" required />
+        </label>
+        <div class="rec-field">
+          <span>作者</span>
+          <div class="rec-who" id="recWho">
+            <button class="rec-who__btn is-active" type="button" data-who="white">🐶 白狗</button>
+            <button class="rec-who__btn" type="button" data-who="brown">🐕 棕狗</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="rec-field">
+        <span>心情</span>
+        <div class="rec-moods" id="recMoods">
+          <button class="rec-mood is-active" type="button" data-mood="happy">😄 开心</button>
+          <button class="rec-mood" type="button" data-mood="loved">🥰 幸福</button>
+          <button class="rec-mood" type="button" data-mood="calm">😌 平静</button>
+          <button class="rec-mood" type="button" data-mood="tired">🥱 疲惫</button>
+          <button class="rec-mood" type="button" data-mood="down">😢 难过</button>
+          <button class="rec-mood" type="button" data-mood="moody">😤 烦躁</button>
+        </div>
+      </div>
+
+      <label class="rec-field">
+        <span>今天发生了什么</span>
+        <textarea id="recText" rows="4" maxlength="500" placeholder="写一点今天的小事、心情或者想记住的瞬间" required></textarea>
+      </label>
+
+      <div class="rec-field">
+        <span>照片</span>
+        <label class="rec-file">
+          ＋ 选择照片（可多选）
+          <input id="recPhotos" type="file" accept="image/*" multiple hidden />
+        </label>
+        <p class="rec-file__hint" id="recPhotoHint">照片会同步进入照片墙。</p>
+      </div>
+
+      <div class="rec-form__actions">
+        <button class="rec-form__cancel" id="recCancel" type="button">取消</button>
+        <button class="rec-form__save" type="submit">保存记录</button>
+      </div>
+    </form>
+
+    <nav class="rec-filter" id="recFilter" aria-label="筛选作者">
+      <button class="rec-filter__btn is-active" type="button" data-who="all">全部</button>
+      <button class="rec-filter__btn" type="button" data-who="white">🐶 白狗</button>
+      <button class="rec-filter__btn" type="button" data-who="brown">🐕 棕狗</button>
+    </nav>
+
+    <div class="rec-timeline" id="recTimeline"></div>
+  </main>
+
+  <!-- 照片灯箱 -->
+  <div class="rec-lb is-hidden" id="recLb" role="dialog" aria-modal="true" aria-label="查看照片">
+    <button class="rec-lb__close" id="recLbClose" type="button" aria-label="关闭">✕</button>
+    <button class="rec-lb__nav rec-lb__nav--prev" id="recLbPrev" type="button" aria-label="上一张">‹</button>
+    <button class="rec-lb__nav rec-lb__nav--next" id="recLbNext" type="button" aria-label="下一张">›</button>
+    <img class="rec-lb__img" id="recLbImg" alt="" />
+  </div>
+
+  <script src="photo-store.js?v=1"></script>
+  <script src="records.js?v=5"></script>
+  <script src="corner-dogs.js?v=5"></script>
+  <script src="scroll-reveal.js?v=1"></script>
+  <script src="ghost.js?v=3"></script>
+  <script src="page-transition.js?v=14"></script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>把我们的小窝变成可以一起写下去的地方 · 我们的小窝</title>
+  <script>document.documentElement.classList.add("pt-loading");</script>
+  <link rel="stylesheet" href="blog.css?v=6" />
+  <link rel="stylesheet" href="corner-dogs.css?v=4" />
+  <link rel="stylesheet" href="site-font.css?v=1" />
+  <link rel="stylesheet" href="scroll-reveal.css?v=1" />
+  <link rel="stylesheet" href="page-transition.css?v=8" />
+  <link rel="stylesheet" href="ghost.css?v=3" />
+</head>
+<body>
+  <div class="blog-bg" aria-hidden="true">
+    <span class="blog-cloud blog-cloud--1"></span>
+    <span class="blog-cloud blog-cloud--2"></span>
+    <span class="blog-cloud blog-cloud--3"></span>
+  </div>
+
+  <header class="site-nav" data-site-nav>
+    <div class="site-nav__bar">
+      <a class="site-nav__brand" href="index.html?skipCover=1#home">我们的小窝</a>
+      <nav class="site-nav__links" aria-label="站内导航">
+        <a href="index.html?skipCover=1#home">首页</a>
+        <a href="places.html">今年想去</a>
+        <a class="is-active" href="blog.html" aria-current="page">双人博客</a>
+        <a href="records.html">生活记录</a>
+        <a href="photos.html">照片墙</a>
+        <a href="activity.html">时段活动</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- 返回博客列表：默认隐藏，滚动到顶部导航收起后才淡入到左上角 -->
+  <a class="blog-back-btn" href="blog.html" aria-label="返回双人博客列表">← 返回</a>
+
+  <div class="blog-tags" id="blogTags" aria-label="文章标签">
+    <span class="blog-tag blog-tag--white">白狗 · 作者A</span>
+    <span class="blog-tag blog-tag--brown">棕狗 · 作者B</span>
+    <span class="blog-tag">2026.05.22</span>
+    <span class="blog-tag">8 分钟阅读</span>
+    <span class="blog-tag">小窝更新</span>
+  </div>
+
+  <main class="blog-shell">
+    <article class="article">
+      <header class="article-head">
+        <p class="article-kicker">双人博客 / 站点开发手记</p>
+        <h1>把我们的小窝变成可以一起写下去的地方</h1>
+        <p class="article-summary">
+          这是双人博客页的第一版原型：以后它会承载两个人共同写的长文章、开发记录、旅行复盘和一些只属于这个小窝的碎碎念。
+        </p>
+        <div class="article-authors" aria-label="作者">
+          <span class="article-author article-author--white">🐶 白狗</span>
+          <span class="article-author article-author--brown">🐕 棕狗</span>
+        </div>
+      </header>
+
+      <section class="article-section" id="opening" data-toc-title="为什么先做博客">
+        <h2>为什么先做博客</h2>
+        <p>
+          生活记录适合写每天发生的小事，照片墙适合保存当时的画面。博客则更像一张可以慢慢展开的长桌，适合放那些需要两个人一起讲清楚的故事。
+        </p>
+        <p>
+          所以这一页的重点不是做一个很重的后台，而是先把阅读体验、目录定位、作者气质和页面节奏搭好。等后面进入正式框架和 Supabase 阶段，文章内容再从数据库读取。
+        </p>
+      </section>
+
+      <section class="article-section" id="two-voices" data-toc-title="两个人的声音">
+        <h2>两个人的声音</h2>
+        <p>
+          双人博客会保留两位作者的独立感。白狗的标识继续使用柔和蓝色，棕狗的标识继续使用暖橙色；一篇文章可以由一个人写，也可以是两个人共同完成。
+        </p>
+        <div class="quote-pair">
+          <blockquote class="quote-pair__item quote-pair__item--white">
+            <span>白狗</span>
+            我想把项目里的小决定都记下来，这样以后回头看，会知道每个功能为什么长成现在这样。
+          </blockquote>
+          <blockquote class="quote-pair__item quote-pair__item--brown">
+            <span>棕狗</span>
+            我更想记录那些使用时的感觉：哪里舒服、哪里可爱、哪里还想再改一点点。
+          </blockquote>
+        </div>
+      </section>
+
+      <section class="article-section" id="reading-flow" data-toc-title="阅读时的滚动体验">
+        <h2>阅读时的滚动体验</h2>
+        <p>
+          顶部标签在页面刚打开时自然地跟随文章标题出现；稍微下滑后，它们会汇聚成一组带白色边框的轻量浮层；继续下滑以后，浮层会淡出，给正文让出干净的阅读空间。
+        </p>
+        <p>
+          右侧目录负责长文定位。当前阅读到的章节会被高亮，旁边的进度条会根据整篇文章的阅读进度向下延展，帮助读者知道自己大概读到了哪里。
+        </p>
+      </section>
+
+      <section class="article-section" id="daily-materials" data-toc-title="和生活记录联动">
+        <h2>和生活记录联动</h2>
+        <p>
+          未来文章可以引用某一天的生活记录或照片。比如旅行复盘里，可以把当天的心情、照片和片段放进正文，形成比时间线更完整的叙事。
+        </p>
+        <p>
+          这一版暂时只做阅读页原型，不直接改动生活记录和照片的数据结构。后面真正接文章系统时，会继续遵守项目约定，把博客文章的数据读写封装成独立存储对象。
+        </p>
+      </section>
+
+      <section class="article-section" id="next-step" data-toc-title="下一步">
+        <h2>下一步</h2>
+        <p>
+          页面结构稳定后，可以继续补两块：文章列表页，以及写文章/编辑文章入口。当前整站仍然公开可读，编辑能力会等账号系统准备好以后再开放给两个账号。
+        </p>
+      </section>
+    </article>
+
+    <aside class="toc" aria-label="文章目录">
+      <div class="toc__inner">
+        <p class="toc__title">文章目录</p>
+        <div class="toc__body">
+          <span class="toc__track" aria-hidden="true">
+            <span class="toc__fill" id="tocFill"></span>
+          </span>
+          <nav class="toc__list" id="tocList"></nav>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <script src="blog-store.js?v=1"></script>
+  <script src="blog.js?v=4"></script>
+  <script src="corner-dogs.js?v=5"></script>
+  <script src="scroll-reveal.js?v=1"></script>
+  <script src="ghost.js?v=3"></script>
+  <script src="page-transition.js?v=14"></script>
+</body>
+</html>

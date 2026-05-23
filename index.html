@@ -1,0 +1,241 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN" class="home-profile-root">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>我们的小窝</title>
+  <script>
+    (function () {
+      try {
+        var params = new URLSearchParams(location.search);
+        var hash = (location.hash || "").toLowerCase();
+        var skipHome = params.get("skipCover") === "1" || hash === "#home" || hash === "#main" || hash === "#skipcover";
+        if (skipHome || localStorage.getItem("cuteblog.discoveryIntro.v1") === "1") {
+          document.documentElement.classList.add("home-intro-seen");
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="styles.css?v=38" />
+  <link rel="stylesheet" href="corner-dogs.css?v=4" />
+  <link rel="stylesheet" href="site-font.css?v=1" />
+  <link rel="stylesheet" href="scroll-reveal.css?v=1" />
+  <link rel="stylesheet" href="page-transition.css?v=8" />
+  <link rel="stylesheet" href="ghost.css?v=3" />
+</head>
+<body class="home-profile-page home-cover-open">
+  <section class="home-discovery" id="homeDiscoveryIntro" aria-label="进入小世界前的悄悄话">
+    <div class="home-discovery__mist" aria-hidden="true"></div>
+    <div class="home-discovery__content" aria-live="polite">
+      <p class="home-discovery__line" id="discoveryLineOne"></p>
+      <p class="home-discovery__line" id="discoveryLineTwo"></p>
+    </div>
+  </section>
+
+  <section class="home-cover" id="homeCover" aria-label="首页封面">
+    <img class="home-cover__bg" src="assets/首页封面.png" alt="" />
+    <canvas class="home-cover__petals" id="coverPetals" aria-hidden="true"></canvas>
+    <div class="home-cover__shade" aria-hidden="true"></div>
+    <div class="home-cover__content">
+      <p class="home-cover__eyebrow">我们的小窝</p>
+      <h1 class="home-cover__title">Welcome to our home</h1>
+    </div>
+    <button class="home-cover__button" id="exploreHome" type="button" aria-label="Start now">
+      <span class="home-cover__button-text home-cover__button-text--top">Explore</span>
+      <span class="home-cover__button-text home-cover__button-text--bottom">Start now</span>
+    </button>
+  </section>
+
+  <div class="home-bg" aria-hidden="true">
+    <div class="home-bg__layer" id="homeBg"></div>
+    <div class="home-bg__wash"></div>
+  </div>
+
+
+  <header class="site-nav home-nav" data-site-nav>
+    <div class="site-nav__bar">
+      <a class="site-nav__brand home-nav__brand" href="index.html?skipCover=1#home">我们的小窝</a>
+      <nav class="site-nav__links home-nav__links" aria-label="主页导航">
+        <a class="is-active" href="index.html?skipCover=1#home" aria-current="page">首页</a>
+        <a href="places.html">今年想去</a>
+        <a href="blog.html">双人博客</a>
+        <a href="records.html">生活记录</a>
+        <a href="photos.html">照片墙</a>
+        <a href="activity.html">时段活动</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="home-profile">
+    <section class="home-hero" aria-labelledby="homeTitle">
+      <div class="home-avatar" aria-hidden="true">
+        <img class="home-avatar__img" src="assets/首页头像.png" alt="" />
+      </div>
+      <p class="home-kicker">Two little dogs, one little home</p>
+      <h1 id="homeTitle">我们的小窝</h1>
+      <div class="home-duo-status" aria-label="两个人的今日状态">
+        <article class="home-status home-status--white">
+          <img class="home-status__dog" src="assets/小白首页形象.png" alt="白狗形象" />
+          <div class="home-status__info">
+            <h2>白狗</h2>
+            <dl>
+              <div>
+                <dt>所在地天气</dt>
+                <dd id="whiteWeather">所在地待设置 · 天气待同步</dd>
+              </div>
+              <div>
+                <dt>今日心情</dt>
+                <dd class="home-status__editable">
+                  <span id="whiteMood">软乎乎地开心</span>
+                  <button class="home-status__edit" type="button" data-who="white" data-field="mood" aria-label="编辑白狗今日心情">编辑</button>
+                </dd>
+              </div>
+              <div>
+                <dt>正在干什么</dt>
+                <dd class="home-status__editable">
+                  <span id="whiteDoing">整理今天的小记录</span>
+                  <button class="home-status__edit" type="button" data-who="white" data-field="doing" aria-label="编辑白狗正在干什么">编辑</button>
+                </dd>
+              </div>
+            </dl>
+            <p class="home-status__quote" id="whiteQuote" data-who="white" role="button" tabindex="0" aria-label="重新生成白狗的一句话">今天也要把小事认真收好。</p>
+          </div>
+        </article>
+
+        <article class="home-status home-status--brown">
+          <div class="home-status__info">
+            <h2>棕狗</h2>
+            <dl>
+              <div>
+                <dt>所在地天气</dt>
+                <dd id="brownWeather">所在地待设置 · 天气待同步</dd>
+              </div>
+              <div>
+                <dt>今日心情</dt>
+                <dd class="home-status__editable">
+                  <span id="brownMood">精神满满</span>
+                  <button class="home-status__edit" type="button" data-who="brown" data-field="mood" aria-label="编辑棕狗今日心情">编辑</button>
+                </dd>
+              </div>
+              <div>
+                <dt>正在干什么</dt>
+                <dd class="home-status__editable">
+                  <span id="brownDoing">计划下一次出门</span>
+                  <button class="home-status__edit" type="button" data-who="brown" data-field="doing" aria-label="编辑棕狗正在干什么">编辑</button>
+                </dd>
+              </div>
+            </dl>
+            <p class="home-status__quote" id="brownQuote" data-who="brown" role="button" tabindex="0" aria-label="重新生成棕狗的一句话">先把想去的地方写下来，路会慢慢出现。</p>
+          </div>
+          <img class="home-status__dog" src="assets/小棕首页形象.jpg" alt="棕狗形象" />
+        </article>
+      </div>
+      <p class="home-hero__text">
+        一起写博客、存照片、记生活，也把每天不同时段发生的小事慢慢收进来。
+      </p>
+      <div class="home-identity" aria-label="作者">
+        <span><b>白狗</b> · 作者A</span>
+        <span><b>棕狗</b> · 作者B</span>
+      </div>
+    </section>
+
+    <section class="home-recent-photos" aria-labelledby="recentPhotosTitle">
+      <h2 id="recentPhotosTitle">最近照片</h2>
+      <div class="home-photo-stage" id="homeRecentPhotos" aria-live="polite">
+        <p class="home-photo-empty">正在整理最近照片...</p>
+      </div>
+    </section>
+
+    <section class="home-modules" aria-labelledby="modulesTitle">
+      <h2 id="modulesTitle">Modules</h2>
+      <div class="home-module-list">
+        <a href="records.html">
+          <span>生活记录</span>
+          <small>心情、日记和当天照片</small>
+        </a>
+        <a href="photos.html">
+          <span>照片墙</span>
+          <small>按日期整理的小相册</small>
+        </a>
+        <a href="blog.html">
+          <span>双人博客</span>
+          <small>两个人一起写长文章</small>
+        </a>
+        <a href="activity.html">
+          <span>时段活动</span>
+          <small>时间线和当日占比统计</small>
+        </a>
+      </div>
+    </section>
+
+    <section class="home-places" aria-labelledby="placesTitle">
+      <h2 id="placesTitle">Places</h2>
+      <div class="home-places__body">
+        <div class="home-places__head">
+          <div>
+            <p class="home-places__kicker">今年想去的地方</p>
+            <p class="home-places__count" id="placeCount">3 个目的地</p>
+          </div>
+          <button class="home-places__toggle" id="placeToggle" type="button" aria-expanded="false" aria-controls="placeForm">
+            添加地点
+          </button>
+        </div>
+
+        <form class="place-form is-hidden" id="placeForm">
+          <label>
+            <span>地点</span>
+            <input id="placeName" type="text" maxlength="24" placeholder="例如：京都" required />
+          </label>
+          <label>
+            <span>想去理由</span>
+            <textarea id="placeNote" rows="3" maxlength="90" placeholder="想在那里做什么、看什么，写一句就好。" required></textarea>
+          </label>
+          <label>
+            <span>氛围</span>
+            <select id="placeTone">
+              <option value="night">星夜</option>
+              <option value="desert">日落</option>
+              <option value="forest">山林</option>
+              <option value="sea">海边</option>
+            </select>
+          </label>
+          <div class="place-form__actions">
+            <button class="place-form__cancel" id="placeCancel" type="button">取消</button>
+            <button class="place-form__save" type="submit">保存地点</button>
+          </div>
+        </form>
+
+        <div class="place-stage" id="placeList" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="home-posts" aria-labelledby="postsTitle">
+      <h2 id="postsTitle">Posts</h2>
+      <div class="home-post-list">
+        <a href="blog-post.html">
+          <time>2026.05.22</time>
+          <span>把我们的小窝变成可以一起写下去的地方</span>
+        </a>
+        <a href="blog.html">
+          <time>2026.05.21</time>
+          <span>照片墙、生活记录和时段活动的第一版</span>
+        </a>
+        <a href="activity.html">
+          <time>Today</time>
+          <span>看看今天的不同时段都做了什么</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <script src="cover.js?v=11"></script>
+  <script src="photo-store.js?v=1"></script>
+  <script src="place-store.js?v=1"></script>
+  <script src="home.js?v=14"></script>
+  <script src="corner-dogs.js?v=5"></script>
+  <script src="scroll-reveal.js?v=1"></script>
+  <script src="ghost.js?v=3"></script>
+  <script src="page-transition.js?v=14"></script>
+</body>
+</html>
+

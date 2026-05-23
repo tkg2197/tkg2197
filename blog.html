@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>双人博客 · 我们的小窝</title>
+  <script>document.documentElement.classList.add("pt-loading");</script>
+  <link rel="stylesheet" href="blog-index.css?v=3" />
+  <link rel="stylesheet" href="corner-dogs.css?v=4" />
+  <link rel="stylesheet" href="site-font.css?v=1" />
+  <link rel="stylesheet" href="scroll-reveal.css?v=1" />
+  <link rel="stylesheet" href="page-transition.css?v=8" />
+  <link rel="stylesheet" href="ghost.css?v=3" />
+</head>
+<body>
+  <div class="bi-bg" aria-hidden="true">
+    <span class="bi-cloud bi-cloud--1"></span>
+    <span class="bi-cloud bi-cloud--2"></span>
+    <span class="bi-cloud bi-cloud--3"></span>
+  </div>
+
+  <header class="site-nav" data-site-nav>
+    <div class="site-nav__bar">
+      <a class="site-nav__brand" href="index.html?skipCover=1#home">我们的小窝</a>
+      <nav class="site-nav__links" aria-label="站内导航">
+        <a href="index.html?skipCover=1#home">首页</a>
+        <a href="places.html">今年想去</a>
+        <a class="is-active" href="blog.html" aria-current="page">双人博客</a>
+        <a href="records.html">生活记录</a>
+        <a href="photos.html">照片墙</a>
+        <a href="activity.html">时段活动</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="bi-shell">
+    <section class="bi-main" aria-labelledby="blogTitle">
+      <header class="bi-head">
+        <p class="bi-kicker">两个人一起写的小窝手记</p>
+        <h1 id="blogTitle">双人博客</h1>
+        <p class="bi-count" id="postCount">第 1 页 · 显示 6 篇文章</p>
+      </header>
+
+      <div class="bi-toolbar">
+        <button class="bi-filter is-active" type="button" data-filter="all">全部文章</button>
+        <button class="bi-filter bi-filter--white" type="button" data-filter="white">白狗写的</button>
+        <button class="bi-filter bi-filter--brown" type="button" data-filter="brown">棕狗写的</button>
+        <button class="bi-upload-toggle" id="blogUploadToggle" type="button" aria-expanded="false" aria-controls="blogUploadPanel">上传 Markdown</button>
+        <a class="bi-years" href="#archive">按年份浏览 →</a>
+      </div>
+
+      <form class="bi-upload is-hidden" id="blogUploadPanel">
+        <label class="bi-upload__file">
+          <span>选择 .md / .markdown 文件</span>
+          <input id="blogUploadInput" type="file" accept=".md,.markdown,text/markdown,text/plain" required />
+        </label>
+        <div class="bi-upload__actions">
+          <p class="bi-upload__hint" id="blogUploadHint">支持 front matter：title、date、authors、tags、summary。</p>
+          <button class="bi-upload__save" type="submit">发布到博客</button>
+        </div>
+      </form>
+
+      <div class="post-list" id="postList">
+        <article class="post-item" data-authors="white brown" data-tags="小窝更新 站点开发 双人博客">
+          <a class="post-item__link" href="blog-post.html">
+            <time class="post-item__date" datetime="2026-05-22">2026.05.22</time>
+            <h2>把我们的小窝变成可以一起写下去的地方</h2>
+            <p>第一版双人博客原型，先把阅读体验、目录定位和作者气质搭好。</p>
+            <div class="post-item__meta">
+              <span>🐶 白狗</span>
+              <span>🐕 棕狗</span>
+              <span>8 分钟阅读</span>
+            </div>
+            <div class="post-item__tags">
+              <span>小窝更新</span>
+              <span>站点开发</span>
+              <span>双人博客</span>
+            </div>
+            <span class="post-item__arrow" aria-hidden="true">›</span>
+          </a>
+        </article>
+
+        <article class="post-item" data-authors="white" data-tags="生活记录 照片墙 设计">
+          <a class="post-item__link" href="blog-post.html">
+            <time class="post-item__date" datetime="2026-05-20">2026.05.20</time>
+            <h2>生活记录和照片墙是怎么连起来的</h2>
+            <p>从点小狗写日记，到照片自动进入照片墙，一条温柔但清楚的数据路径。</p>
+            <div class="post-item__meta">
+              <span>🐶 白狗</span>
+              <span>6 分钟阅读</span>
+            </div>
+            <div class="post-item__tags">
+              <span>生活记录</span>
+              <span>照片墙</span>
+              <span>设计</span>
+            </div>
+            <span class="post-item__arrow" aria-hidden="true">›</span>
+          </a>
+        </article>
+
+        <article class="post-item" data-authors="brown" data-tags="可爱风 美术素材 小狗">
+          <a class="post-item__link" href="blog-post.html">
+            <time class="post-item__date" datetime="2026-05-18">2026.05.18</time>
+            <h2>为什么每个时段都要有不同的小狗姿势</h2>
+            <p>早晨、午后、傍晚和夜里的小狗动作，会让主页像真的正在过一天。</p>
+            <div class="post-item__meta">
+              <span>🐕 棕狗</span>
+              <span>5 分钟阅读</span>
+            </div>
+            <div class="post-item__tags">
+              <span>可爱风</span>
+              <span>美术素材</span>
+              <span>小狗</span>
+            </div>
+            <span class="post-item__arrow" aria-hidden="true">›</span>
+          </a>
+        </article>
+
+        <article class="post-item" data-authors="white brown" data-tags="时段主页 交互 纯前端">
+          <a class="post-item__link" href="blog-post.html">
+            <time class="post-item__date" datetime="2026-05-15">2026.05.15</time>
+            <h2>七个时段的主页，先用纯前端跑起来</h2>
+            <p>不急着进框架，先把天空、日月星云、背景淡入和小狗点击手感磨顺。</p>
+            <div class="post-item__meta">
+              <span>🐶 白狗</span>
+              <span>🐕 棕狗</span>
+              <span>7 分钟阅读</span>
+            </div>
+            <div class="post-item__tags">
+              <span>时段主页</span>
+              <span>交互</span>
+              <span>纯前端</span>
+            </div>
+            <span class="post-item__arrow" aria-hidden="true">›</span>
+          </a>
+        </article>
+
+        <article class="post-item" data-authors="brown" data-tags="相册 回忆 照片墙">
+          <a class="post-item__link" href="blog-post.html">
+            <time class="post-item__date" datetime="2026-05-12">2026.05.12</time>
+            <h2>照片为什么要按日期叠成一摞</h2>
+            <p>一摞照片比一个规整网格更像真实生活：有厚度，也有一点随机的可爱。</p>
+            <div class="post-item__meta">
+              <span>🐕 棕狗</span>
+              <span>4 分钟阅读</span>
+            </div>
+            <div class="post-item__tags">
+              <span>相册</span>
+              <span>回忆</span>
+              <span>照片墙</span>
+            </div>
+            <span class="post-item__arrow" aria-hidden="true">›</span>
+          </a>
+        </article>
+
+        <article class="post-item" data-authors="white" data-tags="Supabase 迁移 计划">
+          <a class="post-item__link" href="blog-post.html">
+            <time class="post-item__date" datetime="2026-05-10">2026.05.10</time>
+            <h2>以后接 Supabase 时，哪些数据要先搬家</h2>
+            <p>日记、照片、文章和账号要分层迁移，原型里的存储对象也会派上用场。</p>
+            <div class="post-item__meta">
+              <span>🐶 白狗</span>
+              <span>6 分钟阅读</span>
+            </div>
+            <div class="post-item__tags">
+              <span>Supabase</span>
+              <span>迁移</span>
+              <span>计划</span>
+            </div>
+            <span class="post-item__arrow" aria-hidden="true">›</span>
+          </a>
+        </article>
+      </div>
+
+      <p class="post-empty is-hidden" id="postEmpty">这个标签下暂时还没有文章。</p>
+
+      <nav class="bi-pager" aria-label="博客分页">
+        <button class="bi-pager__btn is-disabled" type="button" disabled>上一页</button>
+        <span class="bi-pager__now">1 / 1</span>
+        <button class="bi-pager__btn is-disabled" type="button" disabled>下一页</button>
+      </nav>
+    </section>
+
+    <aside class="bi-side" aria-label="博客筛选">
+      <section class="tag-panel">
+        <div class="tag-panel__head">
+          <span class="tag-panel__icon" aria-hidden="true">◇</span>
+          <h2>标签</h2>
+        </div>
+        <div class="tag-grid" id="tagGrid">
+          <button type="button" data-tag="小窝更新">小窝更新</button>
+          <button type="button" data-tag="站点开发">站点开发</button>
+          <button type="button" data-tag="双人博客">双人博客</button>
+          <button type="button" data-tag="生活记录">生活记录</button>
+          <button type="button" data-tag="照片墙">照片墙</button>
+          <button type="button" data-tag="设计">设计</button>
+          <button type="button" data-tag="可爱风">可爱风</button>
+          <button type="button" data-tag="美术素材">美术素材</button>
+          <button type="button" data-tag="小狗">小狗</button>
+          <button type="button" data-tag="时段主页">时段主页</button>
+          <button type="button" data-tag="交互">交互</button>
+          <button type="button" data-tag="纯前端">纯前端</button>
+          <button type="button" data-tag="相册">相册</button>
+          <button type="button" data-tag="Supabase">Supabase</button>
+          <button type="button" data-tag="计划">计划</button>
+        </div>
+        <button class="tag-panel__all" id="clearTags" type="button">查看全部 →</button>
+      </section>
+
+      <section class="archive-panel" id="archive">
+        <h2>年份归档</h2>
+        <a href="blog.html" id="archiveCount">2026 · 6 篇文章</a>
+      </section>
+    </aside>
+  </main>
+
+  <script src="blog-store.js?v=1"></script>
+  <script src="blog-index.js?v=2"></script>
+  <script src="corner-dogs.js?v=5"></script>
+  <script src="scroll-reveal.js?v=1"></script>
+  <script src="ghost.js?v=3"></script>
+  <script src="page-transition.js?v=14"></script>
+</body>
+</html>
